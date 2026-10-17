@@ -27,6 +27,8 @@ export default function MapPage() {
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
   const [routeBinId, setRouteBinId] = useState<string | null>(null);
+  const [routeRequestId, setRouteRequestId] = useState(0);
+  const [routeStatus, setRouteStatus] = useState<"loading" | "ready" | "error" | null>(null);
 
   useEffect(() => {
     void fetch("/bins.json", { cache: "no-store" })
@@ -107,6 +109,7 @@ export default function MapPage() {
   function showRouteForBin(binId: string) {
     setSelectedBinId(binId);
     setRouteBinId(binId);
+    setRouteRequestId((current) => current + 1);
   }
 
   function addBin(event: React.FormEvent<HTMLFormElement>) {
@@ -181,8 +184,10 @@ export default function MapPage() {
           {formOpen ? (language === "mk" ? "Откажи" : "Cancel") : (language === "mk" ? "Додади нова канта" : "Add new bin")}
         </button>
         {routeBin && (
-          <button type="button" className="button button-light" onClick={() => showRouteForBin(routeBin.id)}>
-            {language === "mk" ? "Покажи маршрут" : "Show route"}
+          <button type="button" className="button button-light" disabled={routeStatus === "loading"} onClick={() => showRouteForBin(routeBin.id)}>
+            {language === "mk"
+              ? routeStatus === "loading" ? "Се бара маршрут…" : routeStatus === "ready" ? "Маршрут прикажан" : routeStatus === "error" ? "Маршрутот не е достапен · обиди повторно" : "Покажи маршрут"
+              : routeStatus === "loading" ? "Finding street route…" : routeStatus === "ready" ? "Route shown" : routeStatus === "error" ? "Route unavailable · retry" : "Show route"}
           </button>
         )}
       </div>
@@ -226,8 +231,10 @@ export default function MapPage() {
             language={language}
             selectedBinId={selectedBinId}
             onBinSelect={setSelectedBinId}
-            routeTarget={routeBin ?? selectedBin ?? null}
+            routeTarget={routeBinId ? routeBin : null}
             userLocation={userLocation ?? DEFAULT_CENTER}
+            onRouteStatus={setRouteStatus}
+            routeRequestId={routeRequestId}
           />
         </div>
 
@@ -255,7 +262,6 @@ export default function MapPage() {
                 onRoute={() => showRouteForBin(bin.id)}
                 onShow={() => {
                   setSelectedBinId(bin.id);
-                  setRouteBinId(bin.id);
                 }}
               />
             ))

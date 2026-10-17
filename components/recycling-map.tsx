@@ -2,11 +2,13 @@
 
 import { MapContainer, Marker, Polyline, Popup, TileLayer, useMap } from "react-leaflet";
 import L from "leaflet";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import type { Language } from "@/lib/i18n";
 import type { RecyclingBin } from "@/lib/bins";
 
 const tileUrl = process.env.NEXT_PUBLIC_MAP_TILE_URL ?? "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+type RouteStatus = "loading" | "ready" | "error";
+
 const pointIcon = (selected = false) =>
   L.divIcon({
     className: "map-marker-wrap",
@@ -29,6 +31,8 @@ export default function RecyclingMap({
   onBinSelect,
   routeTarget,
   userLocation,
+  onRouteStatus,
+  routeRequestId,
 }: {
   bins: RecyclingBin[];
   language: Language;
@@ -36,7 +40,52 @@ export default function RecyclingMap({
   onBinSelect?: (binId: string) => void;
   routeTarget?: RecyclingBin | null;
   userLocation?: [number, number] | null;
+  onRouteStatus?: (status: RouteStatus | null) => void;
+  routeRequestId?: number;
 }) {
+  const [routeCoordinates, setRouteCoordinates] = useState<[number, number][]>([]);
+
+  useEffect(() => {
+    if (!routeTarget || !userLocation) {
+      setRouteCoordinates([]);
+      onRouteStatus?.(null);
+      return;
+    }
+
+    const controller = new AbortController();
+    setRouteCoordinates([]);
+    onRouteStatus?.("loading");
+
+    const [startLatitude, startLongitude] = userLocation;
+    const destination = `${routeTarget.longitude},${routeTarget.latitude}`;
+    const start = `${startLongitude},${startLatitude}`;
+    const routeUrl = `https://routing.openstreetmap.de/routed-foot/route/v1/driving/${start};${destination}?overview=full&geometries=geojson&steps=false`;
+
+    void fetch(routeUrl, { signal: controller.signal })
+      .then(async (response) => {
+        if (!response.ok) throw new Error("Walking route request failed");
+        return response.json() as Promise<{
+          code: string;
+          routes?: { geometry?: { coordinates?: [number, number][] } }[];
+        }>;
+      })
+      .then((result) => {
+        const coordinates = result.routes?.[0]?.geometry?.coordinates;
+        if (result.code !== "Ok" || !coordinates?.length) {
+          throw new Error("No walking route found");
+        }
+        setRouteCoordinates(coordinates.map(([longitude, latitude]) => [latitude, longitude]));
+        onRouteStatus?.("ready");
+      })
+      .catch(() => {
+        if (controller.signal.aborted) return;
+        setRouteCoordinates([]);
+        onRouteStatus?.("error");
+      });
+
+    return () => controller.abort();
+  }, [onRouteStatus, routeRequestId, routeTarget, userLocation]);
+
   return (
     <div role="region" aria-label={language === "mk" ? "Мапа на канти во Скопје" : "Map of bins in Skopje"}>
       <MapContainer center={[41.9981, 21.4254]} zoom={12} scrollWheelZoom={false} className="leaflet-map">
@@ -48,8 +97,8 @@ export default function RecyclingMap({
           </Marker>
         )}
 
-        {routeTarget && userLocation && (
-          <Polyline positions={[userLocation, [routeTarget.latitude, routeTarget.longitude]]} pathOptions={{ color: "#2f7d66", weight: 4, opacity: 0.9, dashArray: "8 8" }} />
+        {routeCoordinates.length > 1 && (
+          <Polyline positions={routeCoordinates} pathOptions={{ color: "#2f7d66", weight: 5, opacity: 0.95 }} />
         )}
 
         {bins.map((bin) => (
