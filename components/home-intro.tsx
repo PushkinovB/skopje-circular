@@ -12,7 +12,11 @@ export function HomeIntro() {
         <div className="future-label">{t("futureDemo")}</div>
         <h1>{t("heroTitle")}</h1>
         <p className="hero-description">{t("heroBody")}</p>
-        <div className="hero-actions"><Link className="button button-dark" href="/map">{t("exploreMap")} <span aria-hidden="true">↗</span></Link><Link className="button button-light" href="/workflow">{t("seeFlow")}</Link></div>
+        <div className="hero-actions">
+          <Link className="button button-dark" href="/map">{t("exploreMap")} <span aria-hidden="true">↗</span></Link>
+          <Link className="button button-light" href="/map">{t("cityOnly") === "SKOPJE ONLY · NORTH MACEDONIA" ? "Find nearest bin" : "Најблиска канта"} <span aria-hidden="true">⌖</span></Link>
+          <Link className="button button-light" href="/workflow">{t("seeFlow")}</Link>
+        </div>
         <div className="hero-proof"><span className="proof-check">✓</span><span>{t("notLive")}</span></div>
       </div>
       <div className="hero-art" aria-label="Illustration of a circular city system">

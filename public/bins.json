@@ -13,7 +13,7 @@
   {
     "id": "gtc-plaza",
     "road": "GTC Plaza",
-    "address": "City center near the shopping district",
+    "address": "City center shopping district",
     "latitude": 41.9996,
     "longitude": 21.4312,
     "type": "general",
@@ -46,7 +46,7 @@
   {
     "id": "city-park",
     "road": "City Park",
-    "address": "Skopje central park edge",
+    "address": "Central park edge",
     "latitude": 41.9957,
     "longitude": 21.4196,
     "type": "general",
@@ -57,7 +57,7 @@
   {
     "id": "vero-center",
     "road": "Vero Center",
-    "address": "Near the western city center",
+    "address": "Western city center",
     "latitude": 41.9989,
     "longitude": 21.4063,
     "type": "general",
@@ -79,12 +79,100 @@
   {
     "id": "aerodrom",
     "road": "Aerodrom area",
-    "address": "Main residential and transit hub",
+    "address": "Residential and transit hub",
     "latitude": 41.9997,
     "longitude": 21.4677,
     "type": "general",
     "fill": "empty",
     "updatedAt": "2026-10-17T08:12:00.000Z",
+    "sourceUrl": "https://www.openstreetmap.org/"
+  },
+  {
+    "id": "bit-pazar",
+    "road": "Bit Pazar",
+    "address": "Old bazaar and transit area",
+    "latitude": 41.9902,
+    "longitude": 21.4321,
+    "type": "general",
+    "fill": "full",
+    "updatedAt": "2026-10-17T07:40:00.000Z",
+    "sourceUrl": "https://www.openstreetmap.org/"
+  },
+  {
+    "id": "boris-trajkovski-bridge",
+    "road": "Boris Trajkovski Bridge",
+    "address": "Riverfront and pedestrian route",
+    "latitude": 42.0068,
+    "longitude": 21.4045,
+    "type": "general",
+    "fill": "half",
+    "updatedAt": "2026-10-17T08:18:00.000Z",
+    "sourceUrl": "https://www.openstreetmap.org/"
+  },
+  {
+    "id": "karposh",
+    "road": "Karpoš",
+    "address": "Dense residential neighborhood",
+    "latitude": 42.0031,
+    "longitude": 21.4114,
+    "type": "general",
+    "fill": "empty",
+    "updatedAt": "2026-10-17T08:08:00.000Z",
+    "sourceUrl": "https://www.openstreetmap.org/"
+  },
+  {
+    "id": "kisela-voda",
+    "road": "Kisela Voda",
+    "address": "Large residential district",
+    "latitude": 41.9699,
+    "longitude": 21.4889,
+    "type": "general",
+    "fill": "half",
+    "updatedAt": "2026-10-17T08:11:00.000Z",
+    "sourceUrl": "https://www.openstreetmap.org/"
+  },
+  {
+    "id": "taftalidze",
+    "road": "Taftalidze",
+    "address": "Commercial and civic area",
+    "latitude": 41.9911,
+    "longitude": 21.4508,
+    "type": "general",
+    "fill": "empty",
+    "updatedAt": "2026-10-17T08:22:00.000Z",
+    "sourceUrl": "https://www.openstreetmap.org/"
+  },
+  {
+    "id": "st-pantelejmon",
+    "road": "St. Panteleimon",
+    "address": "Cultural and public square",
+    "latitude": 41.9964,
+    "longitude": 21.4397,
+    "type": "general",
+    "fill": "half",
+    "updatedAt": "2026-10-17T08:03:00.000Z",
+    "sourceUrl": "https://www.openstreetmap.org/"
+  },
+  {
+    "id": "gjorche-petrov",
+    "road": "Gjorče Petrov",
+    "address": "Major residential district",
+    "latitude": 42.0212,
+    "longitude": 21.3927,
+    "type": "general",
+    "fill": "empty",
+    "updatedAt": "2026-10-17T08:09:00.000Z",
+    "sourceUrl": "https://www.openstreetmap.org/"
+  },
+  {
+    "id": "miladinovci",
+    "road": "Miladinovci",
+    "address": "Transit corridor south of the city",
+    "latitude": 41.9724,
+    "longitude": 21.5215,
+    "type": "general",
+    "fill": "half",
+    "updatedAt": "2026-10-17T08:14:00.000Z",
     "sourceUrl": "https://www.openstreetmap.org/"
   }
 ]
