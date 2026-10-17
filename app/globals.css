@@ -211,3 +211,5 @@ body{font-size:16px;line-height:1.6}
 .hero-overline,.future-label,.simulation-stamp{font-size:max(12px,1em)}
 .feature-item b{font-size:max(15px,1em)}
 @media(max-width:480px){.connection-node:not(:last-child):after{display:block}.connection-arrow{display:none}}
+.location-summary{display:flex;align-items:baseline;gap:9px;margin-top:25px;padding-top:16px;border-top:1px solid var(--line);color:#68746b}.location-summary strong{color:var(--forest);font:700 18px Manrope,sans-serif}.location-summary span{font-size:14px}.location-summary small{margin-left:auto;color:#879087;font-size:12px}.mixed-bin-note{margin-top:18px}.mixed-bin-note strong{color:var(--forest)}
+@media(max-width:760px){.location-summary{flex-wrap:wrap}.location-summary small{flex-basis:100%;margin-left:0}}
