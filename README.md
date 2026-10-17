@@ -10,10 +10,10 @@ Requirements: Node.js 20.9 or newer and a Supabase project.
 
 1. Install dependencies with `npm install`.
 2. Copy `.env.example` to `.env.local` and set the Supabase project URL and anon key.
-3. Apply `supabase/migrations/202610170001_initial_schema.sql` in the Supabase SQL editor.
+3. Apply the files in `supabase/migrations/` in filename order in the Supabase SQL editor.
 4. Add location records only after checking the accepted materials and the source's reuse terms. The schema restricts records to `municipality = 'Skopje'`; a record is public only when `is_verified` is true. `last_checked_at` is shown to residents and points older than 45 days are marked stale.
 5. Create approved host accounts in Supabase Auth (disable public signups). Add each approved user's UUID to `public.host_users` from the Supabase SQL editor. Example: `insert into public.host_users (user_id) values ('AUTH-USER-UUID');`.
-6. Set `SUPABASE_SERVICE_ROLE_KEY` and a long random `CRON_SECRET` in server-only local/Vercel environment variables. Never expose the service-role key with a `NEXT_PUBLIC_` prefix.
+6. Set a long random `CRON_SECRET` as a server-only Vercel Production environment variable. The cleanup route uses the public anon key with a database policy that only permits deletion of unreviewed signups older than six months; it does not need a service-role key.
 7. Run `npm run dev` and open `http://localhost:3000`.
 
 ## Location source
@@ -29,11 +29,11 @@ The map uses OpenStreetMap tiles and displays contributor attribution. Use a til
 - Host signups are read only through row-level policies; the one-time contact action uses a checked database function.
 - The form never requests a street address. Host deletion is available on the private screen.
 - The daily `/api/cleanup` cron deletes only unreviewed rows older than six months. Vercel supplies `Authorization: Bearer $CRON_SECRET`; the route rejects requests without it.
-- The service-role key is used only on the server by the retention route.
+- The database permits the anon role to delete only unreviewed rows older than six months; it cannot read or delete other signup records.
 
-## Preview deployment
+## Vercel deployment
 
-Connect this repository to Vercel, configure the environment values above, and create a Preview deployment. Use a separate Supabase project for preview data where practical. Vercel's daily cron runs in UTC and requires a plan that supports the configured cron frequency. Confirm the cron is enabled and `CRON_SECRET` is set before collecting real personal data.
+The connected GitHub repository deploys pushes to `main` to Production and other branches to Preview. The daily cron runs in UTC and requires a plan that supports the configured frequency. Keep `CRON_SECRET` in the Production environment only; do not commit it. Use a separate Supabase project for Preview data where practical.
 
 Before accepting real public signups, add a named data controller and privacy contact, a way for residents to withdraw consent or request deletion, and provider-backed abuse/rate controls for the public form. The honeypot and validation here are baseline demo protections, not a complete anti-abuse system. Confirm local privacy requirements and the production data region with the project owner.
 
