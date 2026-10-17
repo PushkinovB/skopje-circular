@@ -20,7 +20,7 @@ export default function RecyclingMap({ locations, language }: { locations: Recyc
 function MapExtent({ locations }: { locations: RecyclingLocation[] }) {
   const map = useMap();
   useEffect(() => {
-    if (locations.length > 1) map.fitBounds(locations.map(({ latitude, longitude }) => L.latLng(latitude, longitude)), { padding: [34, 34], maxZoom: 14 });
+    if (locations.length > 1) map.fitBounds(L.latLngBounds(locations.map(({ latitude, longitude }) => L.latLng(latitude, longitude))), { padding: [34, 34], maxZoom: 14 });
     else if (locations.length === 1) map.setView([locations[0].latitude, locations[0].longitude], 14);
   }, [locations, map]);
   return null;
