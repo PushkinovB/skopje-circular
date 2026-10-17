@@ -104,6 +104,11 @@ export default function MapPage() {
     return allBins.find((bin) => bin.id === routeBinId) ?? selectedBin;
   }, [allBins, routeBinId, selectedBin]);
 
+  function showRouteForBin(binId: string) {
+    setSelectedBinId(binId);
+    setRouteBinId(binId);
+  }
+
   function addBin(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -176,7 +181,7 @@ export default function MapPage() {
           {formOpen ? (language === "mk" ? "Откажи" : "Cancel") : (language === "mk" ? "Додади нова канта" : "Add new bin")}
         </button>
         {routeBin && (
-          <button type="button" className="button button-light" onClick={() => setSelectedBinId(routeBin.id)}>
+          <button type="button" className="button button-light" onClick={() => showRouteForBin(routeBin.id)}>
             {language === "mk" ? "Покажи маршрут" : "Show route"}
           </button>
         )}
@@ -247,11 +252,11 @@ export default function MapPage() {
                 isClosest={index === 0}
                 language={language}
                 distance={userLocation ?? DEFAULT_CENTER}
-                onRoute={() => {
+                onRoute={() => showRouteForBin(bin.id)}
+                onShow={() => {
                   setSelectedBinId(bin.id);
                   setRouteBinId(bin.id);
                 }}
-                onShow={() => setSelectedBinId(bin.id)}
               />
             ))
           ) : (
