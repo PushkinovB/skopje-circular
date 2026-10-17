@@ -1,0 +1,90 @@
+[
+  {
+    "id": "macedonia-square",
+    "road": "Macedonia Square",
+    "address": "Central Skopje",
+    "latitude": 41.9981,
+    "longitude": 21.4254,
+    "type": "general",
+    "fill": "half",
+    "updatedAt": "2026-10-17T08:00:00.000Z",
+    "sourceUrl": "https://www.openstreetmap.org/"
+  },
+  {
+    "id": "gtc-plaza",
+    "road": "GTC Plaza",
+    "address": "City center near the shopping district",
+    "latitude": 41.9996,
+    "longitude": 21.4312,
+    "type": "general",
+    "fill": "empty",
+    "updatedAt": "2026-10-17T08:15:00.000Z",
+    "sourceUrl": "https://www.openstreetmap.org/"
+  },
+  {
+    "id": "railway-station",
+    "road": "Skopje Railway Station",
+    "address": "Main station area",
+    "latitude": 42.0034,
+    "longitude": 21.4368,
+    "type": "general",
+    "fill": "full",
+    "updatedAt": "2026-10-17T07:45:00.000Z",
+    "sourceUrl": "https://www.openstreetmap.org/"
+  },
+  {
+    "id": "green-market",
+    "road": "Green Market",
+    "address": "Pazar district",
+    "latitude": 42.0007,
+    "longitude": 21.4313,
+    "type": "general",
+    "fill": "half",
+    "updatedAt": "2026-10-17T07:55:00.000Z",
+    "sourceUrl": "https://www.openstreetmap.org/"
+  },
+  {
+    "id": "city-park",
+    "road": "City Park",
+    "address": "Skopje central park edge",
+    "latitude": 41.9957,
+    "longitude": 21.4196,
+    "type": "general",
+    "fill": "empty",
+    "updatedAt": "2026-10-17T08:20:00.000Z",
+    "sourceUrl": "https://www.openstreetmap.org/"
+  },
+  {
+    "id": "vero-center",
+    "road": "Vero Center",
+    "address": "Near the western city center",
+    "latitude": 41.9989,
+    "longitude": 21.4063,
+    "type": "general",
+    "fill": "half",
+    "updatedAt": "2026-10-17T08:10:00.000Z",
+    "sourceUrl": "https://www.openstreetmap.org/"
+  },
+  {
+    "id": "studentski-grad",
+    "road": "Studentski Grad",
+    "address": "University district",
+    "latitude": 42.0052,
+    "longitude": 21.4195,
+    "type": "general",
+    "fill": "half",
+    "updatedAt": "2026-10-17T08:05:00.000Z",
+    "sourceUrl": "https://www.openstreetmap.org/"
+  },
+  {
+    "id": "aerodrom",
+    "road": "Aerodrom area",
+    "address": "Main residential and transit hub",
+    "latitude": 41.9997,
+    "longitude": 21.4677,
+    "type": "general",
+    "fill": "empty",
+    "updatedAt": "2026-10-17T08:12:00.000Z",
+    "sourceUrl": "https://www.openstreetmap.org/"
+  }
+]
