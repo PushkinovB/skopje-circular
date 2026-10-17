@@ -50,6 +50,7 @@ grant select on public.collection_locations to anon, authenticated;
 grant select (user_id) on public.host_users to authenticated;
 grant insert (full_name, phone, contact_channel, neighborhood, materials, consent, consented_at) on public.interest_signups to anon;
 grant select, delete on public.interest_signups to authenticated;
+grant update (contacted_at, reviewed_at) on public.interest_signups to authenticated;
 
 drop policy if exists "public can read verified locations" on public.collection_locations;
 create policy "public can read verified locations"
@@ -70,7 +71,6 @@ create or replace function public.is_interest_host()
 returns boolean
 language sql
 stable
-security definer
 set search_path = ''
 as $$
   select exists (
@@ -79,13 +79,19 @@ as $$
   );
 $$;
 
-revoke all on function public.is_interest_host() from public;
+revoke all on function public.is_interest_host() from public, anon, authenticated;
 grant execute on function public.is_interest_host() to authenticated;
 
 drop policy if exists "only hosts can read signups" on public.interest_signups;
 create policy "only hosts can read signups"
   on public.interest_signups for select to authenticated
   using ((select public.is_interest_host()));
+
+drop policy if exists "only hosts can update contact status" on public.interest_signups;
+create policy "only hosts can update contact status"
+  on public.interest_signups for update to authenticated
+  using ((select public.is_interest_host()))
+  with check ((select public.is_interest_host()));
 
 drop policy if exists "only hosts can delete signups" on public.interest_signups;
 create policy "only hosts can delete signups"
@@ -95,7 +101,6 @@ create policy "only hosts can delete signups"
 create or replace function public.mark_interest_contacted_once(p_signup_id uuid)
 returns void
 language plpgsql
-security definer
 set search_path = ''
 as $$
 begin
@@ -113,7 +118,7 @@ begin
 end;
 $$;
 
-revoke all on function public.mark_interest_contacted_once(uuid) from public;
+revoke all on function public.mark_interest_contacted_once(uuid) from public, anon, authenticated;
 grant execute on function public.mark_interest_contacted_once(uuid) to authenticated;
 
 comment on table public.collection_locations is 'Curated, source-attributed Skopje recycling points. Add only after local acceptance is verified.';
